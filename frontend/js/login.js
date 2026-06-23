@@ -13,21 +13,32 @@ function getRedirectTarget() {
 function setupTabs() {
   const tabs = $all("[data-auth-tab]");
   const panels = $all("[data-auth-panel]");
-  function selectTab(target) {
-    tabs.forEach((item) => item.setAttribute("aria-selected", String(item.dataset.authTab === target)));
-    panels.forEach((panel) => {
-      panel.hidden = panel.dataset.authPanel !== target;
-    });
+
+  function updateModeInUrl(target) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("mode", target === "signup" ? "signup" : "login");
+    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
   }
+
+  function selectTab(target, options = {}) {
+    const selectedTab = target === "signup" ? "signup" : "login";
+    tabs.forEach((item) => item.setAttribute("aria-selected", String(item.dataset.authTab === selectedTab)));
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.authPanel !== selectedTab;
+    });
+    if (options.updateUrl) {
+      updateModeInUrl(selectedTab);
+    }
+  }
+
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      selectTab(tab.dataset.authTab);
+      selectTab(tab.dataset.authTab, { updateUrl: true });
     });
   });
+
   const params = new URLSearchParams(window.location.search);
-  if (params.get("mode") === "signup") {
-    selectTab("signup");
-  }
+  selectTab(params.get("mode") === "signup" ? "signup" : "login");
 }
 
 async function setupAuthForms() {
