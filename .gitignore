@@ -10,7 +10,6 @@ server/local-settings.txt
 # Frontend runtime config with real Firebase/API values
 js/firebase-config.js
 js/app-config.js
-frontend/js/firebase-config.js
 
 # Firebase service account keys
 *serviceAccount*.json
