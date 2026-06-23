@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>일정 수정 | AI 여행 일정 플래너</title>
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark">AI</span> AI 여행 일정 플래너</a>
+      <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" data-nav-toggle>☰</button>
+      <nav class="site-nav" data-site-nav aria-label="주요 메뉴">
+        <a href="index.html" data-nav-link>홈</a>
+        <a href="planner.html" data-nav-link>여행 계획 만들기</a>
+        <a href="community.html" data-nav-link>커뮤니티</a>
+        <a href="my-plans.html" data-nav-link>내 일정</a>
+        <span class="user-chip" data-auth-user hidden></span>
+        <a href="login.html" data-login-link>로그인</a>
+        <a href="login.html?mode=signup" data-signup-link>회원가입</a>
+        <button type="button" data-logout-button hidden>로그아웃</button>
+      </nav>
+    </header>
+
+    <main class="page">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Edit</p>
+            <h1>여행 일정 수정</h1>
+            <p class="lead">제목, 요약, 날짜별 항목, 여행 팁, 공개 여부를 수정할 수 있습니다.</p>
+          </div>
+        </div>
+        <div id="edit-status" class="message" aria-live="polite" hidden></div>
+        <form id="edit-form" class="edit-form" hidden>
+          <section class="form-panel">
+            <div class="input-grid">
+              <label class="field full">
+                <span>여행 제목</span>
+                <input id="edit-title" type="text" maxlength="80" required>
+              </label>
+              <label class="field full">
+                <span>전체 여행 요약</span>
+                <textarea id="edit-summary" rows="4" maxlength="800"></textarea>
+              </label>
+              <div class="visibility-box field full">
+                <label><input id="edit-is-public" type="checkbox"> 공개 일정</label>
+                <p class="muted">공개 일정은 커뮤니티에서 누구나 조회할 수 있습니다.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2>날짜별 일정</h2>
+            <div id="edit-days" class="days"></div>
+          </section>
+
+          <section class="form-panel">
+            <h2>여행 팁</h2>
+            <div id="edit-tips"></div>
+            <button id="add-tip-button" class="button secondary small" type="button">여행 팁 추가</button>
+          </section>
+
+          <div class="form-actions">
+            <button class="button primary" type="submit">저장</button>
+            <button id="cancel-edit-button" class="button secondary" type="button">취소</button>
+            <button id="delete-plan-button" class="button danger" type="button">삭제</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <div data-auth-message class="message warning" hidden></div>
+    <script type="module" src="./js/edit-plan.js?v=20260623"></script>
+  </body>
+</html>

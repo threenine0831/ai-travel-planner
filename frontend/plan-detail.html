@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>일정 상세 | AI 여행 일정 플래너</title>
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark">AI</span> AI 여행 일정 플래너</a>
+      <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" data-nav-toggle>☰</button>
+      <nav class="site-nav" data-site-nav aria-label="주요 메뉴">
+        <a href="index.html" data-nav-link>홈</a>
+        <a href="planner.html" data-nav-link>여행 계획 만들기</a>
+        <a href="community.html" data-nav-link>커뮤니티</a>
+        <a href="my-plans.html" data-nav-link>내 일정</a>
+        <span class="user-chip" data-auth-user hidden></span>
+        <a href="login.html" data-login-link>로그인</a>
+        <a href="login.html?mode=signup" data-signup-link>회원가입</a>
+        <button type="button" data-logout-button hidden>로그아웃</button>
+      </nav>
+    </header>
+
+    <main class="page">
+      <div class="container detail-layout">
+        <section id="detail-meta"></section>
+        <div id="detail-status" class="message" aria-live="polite" hidden></div>
+        <section id="detail-itinerary"></section>
+      </div>
+    </main>
+
+    <div data-auth-message class="message warning" hidden></div>
+    <script type="module" src="./js/plan-detail.js?v=20260623"></script>
+  </body>
+</html>

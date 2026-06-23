@@ -1,0 +1,45 @@
+# Environment files
+.env
+.env.*
+!.env.example
+server/.env
+server/.env.*
+!server/.env.example
+server/local-settings.txt
+
+# Frontend runtime config with real Firebase/API values
+js/firebase-config.js
+js/app-config.js
+frontend/js/firebase-config.js
+
+# Firebase service account keys
+*serviceAccount*.json
+*firebase-adminsdk*.json
+firebase-service-account*.json
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# Node and tooling
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Build/deploy outputs
+dist/
+build/
+.netlify/

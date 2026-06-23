@@ -1,0 +1,115 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function nonEmptyString(value, maxSize) {
+      return value is string && value.size() > 0 && value.size() <= maxSize;
+    }
+
+    function optionalString(value, maxSize) {
+      return value is string && value.size() <= maxSize;
+    }
+
+    function validItineraryPayload(data) {
+      return data.keys().hasAll([
+          'userId',
+          'authorName',
+          'title',
+          'destination',
+          'destinationNormalized',
+          'startDate',
+          'endDate',
+          'budget',
+          'people',
+          'interests',
+          'additionalRequest',
+          'itinerary',
+          'isPublic',
+          'createdAt',
+          'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'userId',
+          'authorName',
+          'title',
+          'destination',
+          'destinationNormalized',
+          'startDate',
+          'endDate',
+          'budget',
+          'people',
+          'interests',
+          'additionalRequest',
+          'itinerary',
+          'isPublic',
+          'createdAt',
+          'updatedAt'
+        ])
+        && data.userId is string
+        && nonEmptyString(data.authorName, 60)
+        && nonEmptyString(data.title, 100)
+        && nonEmptyString(data.destination, 80)
+        && nonEmptyString(data.destinationNormalized, 80)
+        && nonEmptyString(data.startDate, 10)
+        && nonEmptyString(data.endDate, 10)
+        && data.budget is number
+        && data.budget > 0
+        && data.people is number
+        && data.people >= 1
+        && data.people <= 20
+        && data.interests is list
+        && data.interests.size() >= 1
+        && data.interests.size() <= 8
+        && optionalString(data.additionalRequest, 500)
+        && data.itinerary is map
+        && nonEmptyString(data.itinerary.title, 100)
+        && nonEmptyString(data.itinerary.destination, 80)
+        && data.itinerary.days is list
+        && data.itinerary.days.size() >= 1
+        && data.itinerary.days.size() <= 14
+        && data.isPublic is bool
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    match /itineraries/{itineraryId} {
+      allow read: if resource.data.isPublic == true
+        || (signedIn() && resource.data.userId == request.auth.uid);
+
+      allow create: if signedIn()
+        && request.resource.data.userId == request.auth.uid
+        && validItineraryPayload(request.resource.data)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      allow update: if signedIn()
+        && resource.data.userId == request.auth.uid
+        && request.resource.data.userId == resource.data.userId
+        && request.resource.data.createdAt == resource.data.createdAt
+        && validItineraryPayload(request.resource.data)
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if signedIn()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    match /users/{userId} {
+      allow read: if signedIn() && request.auth.uid == userId;
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() > 0
+        && request.resource.data.displayName.size() <= 60;
+      allow update: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() > 0
+        && request.resource.data.displayName.size() <= 60;
+      allow delete: if false;
+    }
+  }
+}

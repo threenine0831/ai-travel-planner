@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>로그인 | AI 여행 일정 플래너</title>
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark">AI</span> AI 여행 일정 플래너</a>
+      <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" data-nav-toggle>☰</button>
+      <nav class="site-nav" data-site-nav aria-label="주요 메뉴">
+        <a href="index.html" data-nav-link>홈</a>
+        <a href="planner.html" data-nav-link>여행 계획 만들기</a>
+        <a href="community.html" data-nav-link>커뮤니티</a>
+        <a href="my-plans.html" data-nav-link>내 일정</a>
+        <span class="user-chip" data-auth-user hidden></span>
+        <a href="login.html" data-login-link>로그인</a>
+        <a href="login.html?mode=signup" data-signup-link>회원가입</a>
+        <button type="button" data-logout-button hidden>로그아웃</button>
+      </nav>
+    </header>
+
+    <main class="page">
+      <div class="container auth-wrap">
+        <section class="auth-card">
+          <p class="eyebrow">Firebase Authentication</p>
+          <h1>로그인 또는 회원가입</h1>
+          <p id="logged-in-notice" class="message success" hidden></p>
+          <div class="tab-list" role="tablist" aria-label="인증 탭">
+            <button type="button" role="tab" aria-selected="true" data-auth-tab="login">로그인</button>
+            <button type="button" role="tab" aria-selected="false" data-auth-tab="signup">회원가입</button>
+          </div>
+
+          <form id="login-form" class="auth-form" data-auth-panel="login">
+            <label class="field">
+              <span>이메일</span>
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+            <label class="field">
+              <span>비밀번호</span>
+              <input type="password" name="password" autocomplete="current-password" required>
+            </label>
+            <button class="button primary" type="submit">로그인</button>
+          </form>
+
+          <form id="signup-form" class="auth-form" data-auth-panel="signup" hidden>
+            <label class="field">
+              <span>닉네임</span>
+              <input type="text" name="displayName" maxlength="40" autocomplete="nickname" required>
+            </label>
+            <label class="field">
+              <span>이메일</span>
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+            <label class="field">
+              <span>비밀번호</span>
+              <input type="password" name="password" autocomplete="new-password" required>
+            </label>
+            <label class="field">
+              <span>비밀번호 확인</span>
+              <input type="password" name="passwordConfirm" autocomplete="new-password" required>
+            </label>
+            <button class="button primary" type="submit">회원가입</button>
+          </form>
+          <div id="auth-status" class="message" aria-live="polite" hidden></div>
+        </section>
+      </div>
+    </main>
+
+    <div data-auth-message class="message warning" hidden></div>
+    <script type="module" src="./js/login.js?v=20260623"></script>
+  </body>
+</html>
