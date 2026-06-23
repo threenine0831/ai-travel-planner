@@ -403,6 +403,12 @@ a:focus-visible {
   font-size: 0.9rem;
 }
 
+.field-help {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
 .interest-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

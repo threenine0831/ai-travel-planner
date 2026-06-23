@@ -57,7 +57,7 @@ export function validateTripInput(data) {
   }
 
   if (!Number.isFinite(data.budget) || data.budget <= 0) {
-    errors.budget = "총예산은 0보다 큰 숫자로 입력해 주세요.";
+    errors.budget = "현지 사용 예산은 0보다 큰 숫자로 입력해 주세요.";
   }
   if (!Number.isInteger(data.people) || data.people < 1 || data.people > 20) {
     errors.people = "여행 인원은 1명 이상 20명 이하로 입력해 주세요.";

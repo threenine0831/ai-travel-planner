@@ -28,7 +28,7 @@ def _build_prompt(request: ItineraryRequest) -> str:
 여행 날짜: {request.start_date.isoformat()}부터 {request.end_date.isoformat()}까지
 여행 일수: {trip_days}일
 반드시 포함할 날짜: {", ".join(dates)}
-총예산: {request.budget}원
+현지 사용 예산(항공권과 숙소 비용 제외): {request.budget}원
 여행 인원: {request.people}명
 관심사: {", ".join(request.interests)}
 추가 요청사항: {additional}
@@ -36,12 +36,14 @@ def _build_prompt(request: ItineraryRequest) -> str:
 작성 규칙:
 - 모든 내용은 한국어로 작성합니다.
 - 날짜별 일정은 실제 이동 시간과 식사 시간을 고려합니다.
-- 총예산을 고려해 지나치게 비싼 일정은 피합니다.
+- 예산은 항공권과 숙소 비용을 제외한 현지 사용 예산입니다.
+- 식비, 현지 교통비, 입장료, 체험비, 쇼핑 등 여행지에서 직접 쓰는 비용만 고려합니다.
+- 현지 사용 예산을 고려해 지나치게 비싼 일정은 피합니다.
 - days 배열 길이는 반드시 {trip_days}개입니다.
 - day 값은 1부터 순서대로 증가해야 합니다.
 - date 값은 반드시 요청 날짜 범위 안의 YYYY-MM-DD 형식이어야 합니다.
 - 각 날짜의 items 배열은 최소 1개 이상이어야 합니다.
-- estimatedBudget과 estimatedCost는 숫자로 작성합니다.
+- estimatedBudget과 estimatedCost는 항공권과 숙소 비용을 제외한 현지 지출 비용 숫자로 작성합니다.
 - JSON만 반환합니다.
 - 마크다운 코드 블록, 설명 문장, 주석은 절대 사용하지 않습니다.
 

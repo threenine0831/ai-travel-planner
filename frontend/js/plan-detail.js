@@ -19,7 +19,7 @@ function renderMeta(container, plan, isOwner, id) {
     createElement("p", { className: "lead", text: `${plan.destination || "여행지"} · ${plan.startDate || ""} ~ ${plan.endDate || ""}` }),
     createElement("div", { className: "meta-list" }, [
       createElement("span", { text: `작성자 ${plan.authorName || "익명 여행자"}` }),
-      createElement("span", { text: `예산 ${formatCurrency(plan.budget || plan.itinerary?.estimatedBudget)}` }),
+      createElement("span", { text: `현지 사용 예산 ${formatCurrency(plan.budget || plan.itinerary?.estimatedBudget)}` }),
       createElement("span", { text: `${plan.people || 1}명` }),
       createElement("span", { text: plan.isPublic ? "공개 일정" : "비공개 일정" }),
     ]),

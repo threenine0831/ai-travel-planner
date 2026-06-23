@@ -123,7 +123,7 @@ export function renderItinerary(container, itinerary) {
       createElement("p", { className: "lead", text: itinerary.summary || "여행 요약이 없습니다." }),
     ]),
     createElement("div", { className: "budget-badge" }, [
-      createElement("span", { text: "예상 총비용" }),
+      createElement("span", { text: "예상 현지 비용" }),
       createElement("strong", { text: formatCurrency(itinerary.estimatedBudget) }),
     ]),
   ]);
@@ -194,7 +194,7 @@ export function renderPlanCard(plan, id, options = {}) {
   card.append(createMetaList([
     `${plan.startDate || ""} ~ ${plan.endDate || ""}`,
     `${dayCount(plan.startDate, plan.endDate)}일`,
-    `예산 ${formatCurrency(plan.budget || plan.itinerary?.estimatedBudget)}`,
+    `현지 예산 ${formatCurrency(plan.budget || plan.itinerary?.estimatedBudget)}`,
     plan.authorName ? `작성자 ${plan.authorName}` : "",
     plan.createdAt ? `작성 ${formatDate(plan.createdAt)}` : "",
     plan.updatedAt ? `수정 ${formatDate(plan.updatedAt)}` : "",

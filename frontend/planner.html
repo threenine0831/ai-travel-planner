@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>여행 계획 만들기 | AI 여행 일정 플래너</title>
     <link rel="icon" href="./assets/images/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./css/style.css?v=20260623c">
+    <link rel="stylesheet" href="./css/style.css?v=20260623d">
   </head>
   <body>
     <header class="site-header">
@@ -56,8 +56,9 @@
               <small class="field-error" data-error-for="endDate"></small>
             </label>
             <label class="field">
-              <span>총예산</span>
-              <input type="number" name="budget" min="1" step="1000" inputmode="numeric" required>
+              <span>현지 사용 예산</span>
+              <input type="number" name="budget" min="1" step="1000" inputmode="numeric" placeholder="예: 500000" required>
+              <small class="field-help">항공권과 숙소 비용을 제외하고, 식비·현지 교통비·입장료·쇼핑 등에 사용할 총금액입니다.</small>
               <small class="field-error" data-error-for="budget"></small>
             </label>
             <label class="field">
@@ -95,6 +96,6 @@
     </main>
 
     <div data-auth-message class="message warning" hidden></div>
-    <script type="module" src="./js/planner.js?v=20260623b"></script>
+    <script type="module" src="./js/planner.js?v=20260623d"></script>
   </body>
 </html>
