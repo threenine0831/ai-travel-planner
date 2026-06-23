@@ -15,6 +15,15 @@ uvicorn app.main:app --reload
 
 `.env`에는 실제 `GOOGLE_AI_API_KEY`와 Firebase Admin 환경변수를 직접 입력해야 합니다. `.env`는 `.gitignore`에 포함되어 커밋되지 않습니다.
 
+AI 응답 속도와 일관성은 다음 환경변수로 조정할 수 있습니다.
+
+```text
+AI_MAX_OUTPUT_TOKENS=8192
+AI_TEMPERATURE=0.45
+```
+
+서버는 여행 일수에 따라 실제 출력 토큰 상한을 자동으로 낮춰 짧은 일정은 더 빠르게 생성합니다.
+
 ## 테스트
 
 ```bash

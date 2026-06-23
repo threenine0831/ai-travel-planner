@@ -12,6 +12,34 @@ from app.utils.exceptions import AIProviderError, AITimeoutError, ConfigError
 logger = logging.getLogger(__name__)
 
 
+def _prefers_budget_saving(additional_request: str | None) -> bool:
+    text = (additional_request or "").lower()
+    saving_keywords = ("절약", "가성비", "저렴", "아껴", "아끼", "최대한 싸", "저예산", "경제적")
+    return any(keyword in text for keyword in saving_keywords)
+
+
+def _budget_guidance(request: ItineraryRequest) -> str:
+    if _prefers_budget_saving(request.additional_request):
+        return """
+- 사용자가 절약 또는 가성비를 요청했으므로, 현지 사용 예산 이하에서 합리적으로 낮춰 구성해도 됩니다.
+- 그래도 너무 빈약한 일정이 되지 않도록 핵심 식사, 교통, 입장료, 체험 비용은 반드시 반영합니다.
+""".strip()
+
+    target_min = int(request.budget * 0.75)
+    target_max = int(request.budget * 0.95)
+    return f"""
+- 특별히 절약 요청이 없으므로 estimatedBudget은 현지 사용 예산의 75~95%에 가깝게 맞춥니다.
+- 이번 요청의 권장 현지 지출 범위는 {target_min}원부터 {target_max}원까지입니다.
+- 예산이 넉넉하면 더 좋은 식사, 유료 체험, 편한 현지 이동, 전망 좋은 장소 등으로 여행 품질을 높입니다.
+- 특별한 이유 없이 입력 예산의 절반 이하로만 쓰는 일정을 만들지 않습니다.
+""".strip()
+
+
+def _max_output_tokens_for_trip(trip_days: int, configured_limit: int) -> int:
+    estimated_limit = 1500 + (trip_days * 450)
+    return max(2200, min(configured_limit, estimated_limit))
+
+
 def _build_prompt(request: ItineraryRequest) -> str:
     trip_days = request.trip_days
     dates = [
@@ -38,7 +66,10 @@ def _build_prompt(request: ItineraryRequest) -> str:
 - 날짜별 일정은 실제 이동 시간과 식사 시간을 고려합니다.
 - 예산은 항공권과 숙소 비용을 제외한 현지 사용 예산입니다.
 - 식비, 현지 교통비, 입장료, 체험비, 쇼핑 등 여행지에서 직접 쓰는 비용만 고려합니다.
-- 현지 사용 예산을 고려해 지나치게 비싼 일정은 피합니다.
+- 현지 사용 예산을 초과하지 않습니다.
+{_budget_guidance(request)}
+- 빠른 응답을 위해 각 날짜의 items는 핵심 일정 3~5개로 제한합니다.
+- summary는 2문장 이하, notes는 80자 이하, tips는 3~5개로 간결하게 작성합니다.
 - days 배열 길이는 반드시 {trip_days}개입니다.
 - day 값은 1부터 순서대로 증가해야 합니다.
 - date 값은 반드시 요청 날짜 범위 안의 YYYY-MM-DD 형식이어야 합니다.
@@ -104,10 +135,19 @@ async def generate_itinerary(request: ItineraryRequest) -> AIItinerary:
 
     client = genai.Client(api_key=settings.google_ai_api_key)
     prompt = _build_prompt(request)
+    max_output_tokens = _max_output_tokens_for_trip(request.trip_days, settings.ai_max_output_tokens)
     config = types.GenerateContentConfig(
         response_mime_type="application/json",
-        temperature=0.7,
-        max_output_tokens=8192,
+        temperature=settings.ai_temperature,
+        max_output_tokens=max_output_tokens,
+    )
+    logger.info(
+        "google_ai_request_started",
+        extra={
+            "model": settings.google_ai_model,
+            "trip_days": request.trip_days,
+            "max_output_tokens": max_output_tokens,
+        },
     )
 
     def call_model() -> object:
