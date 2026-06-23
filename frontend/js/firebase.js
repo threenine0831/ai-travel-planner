@@ -67,6 +67,7 @@ export function getFirebaseErrorMessage(error) {
     "auth/unauthorized-domain": "Firebase Authentication 승인된 도메인에 현재 사이트 주소를 추가해 주세요.",
     "auth/network-request-failed": "Firebase에 연결하지 못했습니다. 네트워크 또는 도메인 설정을 확인해 주세요.",
     "permission-denied": "Firestore 권한이 없습니다. 로그인 상태와 보안 규칙을 확인해 주세요.",
+    "failed-precondition": "Firestore 인덱스가 필요합니다. Firebase Console에서 인덱스를 생성해 주세요.",
     "unavailable": "Firebase 서비스에 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.",
     FIREBASE_CONFIG_MISSING: "Firebase 설정이 필요합니다. js/firebase-config.example.js를 복사해 js/firebase-config.js를 만든 뒤 값을 입력해 주세요.",
   };
