@@ -1,3 +1,3 @@
 export const appConfig = {
-  apiBaseUrl: "http://localhost:8000",
+  apiBaseUrl: https://ai-travel-planner-1k72.onrender.com,
 };
