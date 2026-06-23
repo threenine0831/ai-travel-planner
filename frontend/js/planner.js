@@ -4,7 +4,7 @@ import { getCurrentIdToken } from "./auth.js";
 import { requireAuthenticatedPage } from "./auth-guard.js";
 import { generateItinerary } from "./api.js";
 import { $, onReady, setButtonLoading, showMessage, writeSessionJson } from "./ui.js";
-import { applyFormErrors, getTripFormData, validateTripInput } from "./validators.js";
+import { applyFormErrors, getTripFormData, validateTripInput } from "./validators.js?v=20260623b";
 
 async function setupPlanner() {
   const user = await requireAuthenticatedPage();
