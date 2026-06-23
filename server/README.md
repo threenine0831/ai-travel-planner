@@ -18,11 +18,11 @@ uvicorn app.main:app --reload
 AI 응답 속도와 일관성은 다음 환경변수로 조정할 수 있습니다.
 
 ```text
-AI_MAX_OUTPUT_TOKENS=8192
+AI_MAX_OUTPUT_TOKENS=12288
 AI_TEMPERATURE=0.45
 ```
 
-서버는 여행 일수에 따라 실제 출력 토큰 상한을 자동으로 낮춰 짧은 일정은 더 빠르게 생성합니다.
+서버는 여행 일수에 따라 실제 출력 토큰 상한을 자동으로 조절합니다. 값이 너무 낮으면 긴 일정의 JSON 응답이 중간에 잘릴 수 있습니다.
 
 ## 테스트
 

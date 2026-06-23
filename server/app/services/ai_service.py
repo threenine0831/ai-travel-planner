@@ -36,8 +36,8 @@ def _budget_guidance(request: ItineraryRequest) -> str:
 
 
 def _max_output_tokens_for_trip(trip_days: int, configured_limit: int) -> int:
-    estimated_limit = 1500 + (trip_days * 450)
-    return max(2200, min(configured_limit, estimated_limit))
+    estimated_limit = 3200 + (trip_days * 800)
+    return max(4096, min(configured_limit, estimated_limit))
 
 
 def _build_prompt(request: ItineraryRequest) -> str:

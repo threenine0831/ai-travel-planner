@@ -30,7 +30,8 @@ def test_prompt_allows_lower_budget_when_saving_requested():
 
 
 def test_output_token_limit_scales_by_trip_days():
-    assert _max_output_tokens_for_trip(1, 8192) == 2200
-    assert _max_output_tokens_for_trip(3, 8192) == 2850
-    assert _max_output_tokens_for_trip(14, 8192) == 7800
-    assert _max_output_tokens_for_trip(14, 4096) == 4096
+    assert _max_output_tokens_for_trip(1, 12288) == 4096
+    assert _max_output_tokens_for_trip(3, 12288) == 5600
+    assert _max_output_tokens_for_trip(7, 12288) == 8800
+    assert _max_output_tokens_for_trip(14, 12288) == 12288
+    assert _max_output_tokens_for_trip(14, 8192) == 8192

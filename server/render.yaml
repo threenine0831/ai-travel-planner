@@ -19,6 +19,6 @@ services:
       - key: AI_TIMEOUT_SECONDS
         value: 45
       - key: AI_MAX_OUTPUT_TOKENS
-        value: 8192
+        value: 12288
       - key: AI_TEMPERATURE
         value: 0.45

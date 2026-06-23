@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     environment: str = Field(default="development", alias="ENVIRONMENT")
     rate_limit_per_minute: int = Field(default=5, alias="RATE_LIMIT_PER_MINUTE")
     ai_timeout_seconds: int = Field(default=45, alias="AI_TIMEOUT_SECONDS")
-    ai_max_output_tokens: int = Field(default=8192, ge=2048, le=8192, alias="AI_MAX_OUTPUT_TOKENS")
+    ai_max_output_tokens: int = Field(default=12288, ge=4096, le=16384, alias="AI_MAX_OUTPUT_TOKENS")
     ai_temperature: float = Field(default=0.45, ge=0, le=1, alias="AI_TEMPERATURE")
 
     @property

@@ -113,12 +113,12 @@ Google AI Studio에서 API 키를 발급하고 로컬은 `server/local-settings.
 ```text
 GOOGLE_AI_API_KEY=your-google-ai-api-key
 GOOGLE_AI_MODEL=gemini-2.5-flash
-AI_MAX_OUTPUT_TOKENS=8192
+AI_MAX_OUTPUT_TOKENS=12288
 AI_TEMPERATURE=0.45
 ```
 
 이 프로젝트는 Google의 공식 `google-genai` Python SDK를 사용합니다. 서버 코드는 `GOOGLE_AI_API_KEY`가 없으면 실제 AI 호출을 하지 않고 한국어 설정 오류를 반환합니다.
-응답 속도를 위해 서버는 여행 일수에 따라 실제 `max_output_tokens`를 자동으로 낮춥니다. `AI_MAX_OUTPUT_TOKENS`는 최대 상한이며, `AI_TEMPERATURE`는 일정 추천의 일관성을 조절합니다.
+서버는 여행 일수에 따라 실제 `max_output_tokens`를 자동으로 조절합니다. `AI_MAX_OUTPUT_TOKENS`는 최대 상한이며, 값이 너무 낮으면 긴 일정의 JSON 응답이 중간에 잘릴 수 있습니다. `AI_TEMPERATURE`는 일정 추천의 일관성을 조절합니다.
 
 ## FastAPI 로컬 실행
 
